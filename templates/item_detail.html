@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block title %}Элемент темы {{ category.name }} - {{ exercise.name }}.{% endblock %}
+
+{% block content %}
+<div class="col-md-8 mx-auto bg-dark my-5 px-0 rounded-lg border shadow" style="min-height: 100vh;">
+  {% if exercise.image %}<img src="{{ exercise.image.url }}" class="col-12 p-0 m-0 rounded-top shadow" alt="" style="max-height: 650px; object-fit: cover;">{% endif %}
+  <h3 class="text-light text-center my-3" style="word-wrap: break-word;">Название: {{ exercise.name }}</h3>
+  <div class="px-5" style="overflow-x:hidden;">
+    <p class="text-light" style="word-wrap: break-word;">Описание: {{ exercise.description }}</p>
+    <p class="text-warning font-weight-bold" style="word-wrap: break-word;">Тема: <a class="text-light font-italic" href="{{ exercise.categories.get_absolute_url }}">{{ exercise.categories }}</a></p>
+    <div class="bg-white p-2 rounded shadow mb-5">
+      {{ exercise.body|safe }}
+    </div>
+  </div>
+</div>
+
+{% if exercise.categories.image %}
+  <style>
+    body{
+      background-image: url('{{ exercise.categories.image.url }}');
+      object-fit: cover;
+      background-attachment: fixed;
+    }
+  </style>
+{% endif %}
+{% endblock %}

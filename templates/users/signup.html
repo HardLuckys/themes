@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block title %}Регистрация{% endblock %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+{% if user.is_authenticated %}
+  <h3 class="text-center">Вы авторизованы, <a class="text-success" href="{{ categories_list }}">перейти на главную</a></h3>
+{% else %}
+  <form class="col-md-8 mx-auto my-5" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <h5>Обязательные поля:</h5>
+    <p>Email:</p>
+    <input name="email" placeholder="email" class="textinput textInput form-control {% if form.email.errors %}is-invalid{% endif %}" value="{{ form.email.value|default_if_none:"" }}" required="" id="id_email"></p>
+    <p>Никнейм:</p>
+    <input name="username" placeholder="никнейм" class="textinput textInput form-control {% if form.username.errors %}is-invalid{% endif %}" value="{{ form.username.value|default_if_none:'' }}" required="" id="id_username"></p>
+    <p>Пароль:</p>
+    <input type="password" name="password1" placeholder="Введите пароль" class="textinput textInput form-control" value="{{ form.password1.value|default_if_none:'' }}" required="" id="id_password1"></p>
+    <p>Подтвердите пароль:</p>
+    <input type="password" name="password2" placeholder="Повторите пароль" class="textinput textInput form-control" value="{{ form.password2.value|default_if_none:'' }}" required="" id="id_password2"></p>
+    <h5>Необязательные поля:</h5>
+    {{ form.about_me|as_crispy_field }}
+    <div>
+      <p>Картинка: </p>
+      <input type="file" name="avatar" accept="image/*" class="clearablefileinput" value="{{ form.avatar.value }}" id="id_avatar">
+    </div>
+    <input class="btn btn-success my-5" onclick="countRabbits()" type="submit" name="" value="post">
+  </form>
+
+  <script>
+    function countRabbits() {
+      var username = document.getElementById("id_username").value;
+      var password = document.getElementById("id_password1").value;
+      var avatar = ""
+      localStorage.setItem("username", username)
+      localStorage.setItem("password", password)
+      localStorage.setItem("avatar", avatar)
+    }
+  </script>
+{% endif %}
+{% endblock %}

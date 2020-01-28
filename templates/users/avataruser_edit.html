@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block title %}Редактирование{% endblock %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+  <div class="">
+    <div class="row mx-auto">
+      <div class="col-md-8 mx-auto border rounded p-4 shadow-lg mt-5">
+        <h3 class="text-center">Редактирование</h3>
+        <form action="" method="post" enctype="multipart/form-data">
+          {% csrf_token %}
+          <p>{{ form.username|as_crispy_field }}</p>
+          <p>{{ form.about_me|as_crispy_field }}</p>
+          <p>{{ form.avatar|as_crispy_field }}</p>
+          <button class="col-12 btn btn-success" type="submit">Обновить</button>
+        </form>
+        <div class="row">
+          <a class="col-md-3 btn btn-danger mx-auto mt-2" href="{% url 'avataruser_delete' user.slug %}">Удалить аккаунт</a>
+          <a class="col-md-3 btn btn-dark mx-auto mt-2" href="{% url 'avataruser_detail' user.slug %}">Мой профиль</a>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

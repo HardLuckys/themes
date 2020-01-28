@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block title %}Темы{% endblock %}
+
+{% load static %}
+
+{% block content %}
+<div class="container">
+  <div class="row justify-content-around py-5">
+    <h3 class="text-center text-dark col-12 font-weight-bold">Темы</h3>
+    {% for category in categories %}
+    <div class="col-3 mt-5">
+      <a class="d-block shadow" href="{{ category.get_absolute_url }}">
+        {% if category.image %}
+          <img class="col-12 p-0 m-0" src="{{ category.image.url }}" alt="" style="max-height: 350px; min-height: 350px; object-fit: cover;">
+        {% else %}
+          <img class="col-12 p-0 m-0" src="{% static 'img/image.jpg' %}" alt="" style="max-height: 350px; min-height: 350px; object-fit: cover;">
+        {% endif %}
+      </a>
+      <div class="bg-dark text-light px-2 py-2">
+        <h5 style="word-wrap: break-word;">{{ category.name }}<h5>
+        <small style="word-wrap: break-word;">От <a class="text-light" href="{{ category.author.get_absolute_url }}">{{ category.author.username }}</a>. {{ category.created_at }}</small>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

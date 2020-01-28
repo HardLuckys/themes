@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+
+{% load crispy_forms_tags %}
+
+{% block title %}Тема - {{ category.name }}{% endblock %}
+
+{% block content %}
+{% if exercises %}
+<script type="text/javascript" src="{{ STATIC_URL }}js/tiny_mce/tiny_mce.js"></script>
+<h5 class="text-light text-center mt-5 bg-dark col-md-7 mx-auto rounded py-2 border" style=" max-height: 60vh; box-shadow: 7px 4px 37px 3px rgba(0,0,0,0.75);">Элементы темы {{ category.name }}</h5>
+  <div class="form-elegant scrollbar mx-auto col-md-7 mt-1 rounded border" id="messages_area" style=" max-height: 60vh; box-shadow: 7px 4px 37px 3px rgba(0,0,0,0.75); background: rgba(3,3,3,.85);">
+    {% for exercise in exercises %}
+      <div class="col-12 my-5 bg-dark text-light rounded shadow p-3" id="{{ exercise.id }}">
+        <p style="word-wrap: break-word;">Название: {{ exercise.name }}</p>
+        <p style="word-wrap: break-word;">
+          Описание: {{ exercise.description|truncatechars:15 }}
+          <a class="text-info font-weight-bold text-secondary" data-toggle="collapse" data-target="#collapseExample1_{{ exercise.pk }}_{{ exercise.id }}" aria-expanded="false" aria-controls="collapseExample1_{{ exercise.pk }}_{{ exercise.id }}" style="cursor: pointer;">Подробно</a>
+        </p>
+        <div class="collapse col-12 m-0 p-0 mx-auto" id="collapseExample1_{{ exercise.pk }}_{{ exercise.id }}">
+          <p style="word-wrap: break-word;"> {{ exercise.description }}</p>
+        </div>
+        <a class="btn btn-info shadow" href="{{ exercise.get_absolute_url }}">Подробно</a>
+      </div>
+    {% endfor %}
+  </div>
+{% endif %}
+  <div class="col-md-7 mx-auto text-light p-0 mt-2 mb-5 border rounded" style="box-shadow: 7px 4px 37px 3px rgba(0,0,0,0.75);">
+    <form method="post" class="p-5 rounded shadow-lg" id="form_area" enctype="multipart/form-data" style="background: rgba(3,3,3,.85);">
+      {{ form.media }}
+      <h5 class="text-center text-light" style="word-wrap: break-word;">Содание элемента темы: {{ category.name }}</h5>
+      <p style="word-wrap: break-word;">От <a class="text-light" href="{{ category.author.get_absolute_url }}" style="word-wrap: break-word;"><img class="rounded rounded-circle" src="{{ category.author.avatar.url }}" style="width: 35px; height: 35px; object-fit: cover;"> {{ category.author.username }}</a></p>
+      <p>Описание: {{ category.description|truncatechars:20 }} <a class="text-info font-weight-bold text-secondary" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample" style="cursor: pointer;">Подробно</a></p>
+      <div class="collapse col-12 m-0 p-0 mx-auto" id="collapseExample">
+        <p style="word-wrap: break-word;"> {{ category.description }}</p>
+      </div>
+      {% csrf_token %}
+      {{ form.errors }}
+      <p>Название:</p>
+      <input class="form-control mb-3" type="text" placeholder="Название" value='{{ form.name.value|default_if_none:"" }}' name="name" maxlength="200" required="" id="id_name">
+      <p>Описание:</p>
+      <input class="form-control mb-3" type="text" placeholder="Описание" value='{{ form.description.value|default_if_none:"" }}' name="description" maxlength="1000" required="" id="id_description">
+      <p>Основной текст:</p>
+      {{ form.body|safe }}
+      {{ form.image|as_crispy_field }}
+      <input class="btn btn-success" type="submit" name="" value="Создать">
+    </form>
+  </div>
+
+<style>
+  {% if category.image %}
+    body{
+      background-image: url('{{ category.image.url }}');
+      object-fit: cover;
+      background-attachment: fixed;
+    }
+  {% endif %}
+  .form-elegant{
+    position: relative;
+    overflow-y: scroll;
+  }
+  .scrollbar-light-blue::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+    background-color: #F5F5F5;
+    border-radius: 10px;
+  }
+  .scrollbar-light-blue::-webkit-scrollbar {
+    width: 12px;
+    background-color: #F5F5F5;
+  }
+  .scrollbar-light-blue::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+    background-color: #82B1FF;
+  }
+</style>
+
+{% endblock %}

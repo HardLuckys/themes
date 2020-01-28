@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block title %}Удаление{% endblock %}
+
+{% block content %}
+  <div class="row mr-5 ml-5">
+    <div class="col-md-6 mx-auto mt-5 p-3 rounded-lg border border-danger shadow-lg">
+      <h3 class="text-center">Удаление</h3>
+      <form action="" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <p class="mt-4 mb-4">Вы уверены что хотите удалить "{{ user.username }}"?</p>
+        <a href="{% url 'avataruser_edit' user.pk %}" class="btn btn-success mt-5 mx-auto">Назад</a>
+        <button class="btn border border-danger mt-5 text-danger mx-5" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">Удалить</button>
+        <div class="collapse col-md-5 mx-auto" id="collapseExample">
+          <div class="card card-body border border-danger mt-5 shadow-lg bg-dark">
+            <p class="text-danger text-center mt-3 mb-5">Точно удалить?</p><button class="btn btn-danger d-block mx-auto" type="submit">удалить</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+{% endblock %}

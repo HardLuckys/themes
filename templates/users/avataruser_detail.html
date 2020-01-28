@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block title %}пользователь - id{{ user.slug }}{% endblock %}
+
+{% block content %}
+    <div class="row p-0 m-0">
+        <div class="col-lg-8 mx-auto rounded-lg mt-5 mb-5">
+          <div class="col-12 mx-auto bg-dark p-0 shadow-bottom rounded-lg " style="height: 300px;">
+            <img class="card-img rounded-lg" src="{% if author.background_image %}{{ author.background_image.url }} {% endif %}" alt="" style="object-fit: cover; height: 100%; box-shadow: inset 0px 0px 125px 19px rgba(0,0,0,0.75); border-radius: 0px;">
+              <a href="{% if user == author %}{% url 'avataruser_edit' user.slug %}{% endif %}"><img src="{{ author.avatar.url }}" class="h-50 bg-light position-absolute my-5 rounded-circle border shadow-lg" style="width: 150px; left: 50%; top: 80%; transform: translate(-50%, -50%); z-index: 10;" title="{% if user == author %}Редактировать {{ author.username }}{% else %}Пользователь {{ author.username }}{% endif %}"></img></a>
+          </div>
+          <div class="col-12 mt-3 mx-auto bg-secondary shadow-top rounded-lg pt-3 pb-5" style="min-height: 800px;">
+            <div class="row col-md-11 p-0 mx-auto mt-3">
+              <div class="col-12 mx-auto p-0 text-light mt-5">
+                <div class="col-lg-10 mx-auto border border-light rounded-lg p-3 bg-dark mt-2" id="lol">
+                  <p>Username: {{ author.username }}</p>
+                  {% if user == author %}
+                    <p>Создан: {{ user.created_at }}</p>
+                  {% endif %}
+                </div>
+              </div>
+              {% if author.about_me %}
+                <div class="col-lg-10 mx-auto bg-dark text-light p-3 mt-5 border rounded" style="min-height: 300px;">
+                  {% if user == author %}
+                    <p>Обо мне: {{ author.about_me|capfirst }}</p>
+                  {% else %}
+                    <p>Информация о {{ author.username }}: {{ author.about_me|capfirst }}</p>
+                  {% endif %}
+                </div>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+    </div>
+{% endblock content %}
