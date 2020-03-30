@@ -88,7 +88,7 @@ def get_code_view(request):
 
 def logout_view(request):
     if not request.user.is_authenticated:
-        return redirect('login')
+        return redirect('login') 
     logout(request)
     return HttpResponseRedirect('/')
 
