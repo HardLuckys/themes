@@ -1,6 +1,8 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
-from .models import CustomUser
+from .models import CustomUser, MyUserModel
+from django.forms import PasswordInput
+
 
 class CustomUserCreationForm(UserCreationForm):
     class Meta(UserCreationForm.Meta):
@@ -10,4 +12,13 @@ class CustomUserCreationForm(UserCreationForm):
 class CustomUserUpdate(UserChangeForm):
     class Meta:
         model = CustomUser
-        fields = ('username', 'about_me', 'avatar')
+        fields = ('about_me', 'avatar', 'username')
+
+class GetCode(forms.ModelForm):
+    class Meta:
+        model = MyUserModel
+        fields = ('url', )
+
+class LoginForm(forms.Form):
+    email = forms.EmailField()
+    password = forms.CharField(widget=PasswordInput())

@@ -24,7 +24,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('tinymce/', include('tinymce.urls')),
     path('api-token-auth/', obtain_auth_token, name='api-token-auth'),
-    path('users/', include('django.contrib.auth.urls')),
+    #path('users/', include('django.contrib.auth.urls')),
     path('users/', include('users.urls')),
     path('', include('themes.urls')),
 ]

@@ -33,7 +33,7 @@ class Exercises(models.Model):
     updated_at = models.DateTimeField(auto_now=True, null=True, verbose_name="обновлен в")
     image = models.ImageField(upload_to='media', blank=True, verbose_name="картинка")
     body = HTMLField(null=True, verbose_name="Основной текст")
-
+    
     def __str__(self):
         return self.name
 

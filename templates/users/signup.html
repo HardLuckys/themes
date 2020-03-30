@@ -9,6 +9,8 @@
   <h3 class="text-center">Вы авторизованы, <a class="text-success" href="{{ categories_list }}">перейти на главную</a></h3>
 {% else %}
   <form class="col-md-8 mx-auto my-5" method="post" enctype="multipart/form-data">
+    <p>{{ form.errors }}</p>
+    <p>{{ error_mess }}</p>
     {% csrf_token %}
     <h5>Обязательные поля:</h5>
     <p>Email:</p>

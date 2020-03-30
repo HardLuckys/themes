@@ -8,20 +8,15 @@
 {% if user.is_authenticated %}
   <h3 class="text-center">Вы авторизованы, <a class="text-success" href="{% url 'store:categories_list' %}">перейти на главную</a></h3>
 {% else %}
-  <form method="post" class="col-md-6 mx-auto my-5 py-5">
+  <form method="post" class="col-md-6 mx-auto my-5 py-5" name="register_form">
     <h3 class="text-center">Логин</h3>
     <img src="" class="d-block mb-3 mt-3 rounded-circle mx-auto" style="width: 60px; height: 60px;" id="avatar" alt="">
+    <p class="text-center text-danger">{{ error_mess }}</p>
+    <p class="text-center text-danger">{{ form.errors }}</p>
     <div class="form-group">
       {% csrf_token %}
-      <div class="form-group">
-        <label for="id_username">Username</label>
-        <input type="text" name="username" autofocus="" class="textinput textInput form-control {% if form.username.errors %}is-invalid{% endif %}" value="{% if form.username.value == None %}{% else %}{{ form.username.value }}{% endif %}" required="" id="id_username">
-      </div>
-      <div class="form-group">
-        <label for="id_password">Пароль</label>
-        <input type="password" name="password" class="textinput textInput form-control {% if form.password.errors %}is-invalid{% endif %}" value="{{ form.password.value }}" required="" id="id_password">
-      </div>
-    </div>
+      {{ form.email|as_crispy_field }}
+      {{ form.password|as_crispy_field }}
     <button type="submit" class="btn btn-primary">Войти</button>
   </form>
   <script>
@@ -34,6 +29,18 @@
       localStorage.setItem("username", username)
       localStorage.setItem("password", password)
     }
+    function sayHi() {
+      console.log('lol')
+      var x = document.forms["register_form"]["username"].value;
+      if (x == "") {
+        var element = document.getElementById("id_username");
+        element.classList.add("is-invalid");
+      } else {
+        var element = document.getElementById("id_username");
+        element.classList.remove("is-invalid")
+      }
+    }
+  setInterval(sayHi, 100);
   </script>
 {% endif %}
 

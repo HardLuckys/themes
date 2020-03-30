@@ -107,6 +107,11 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
+AUTHENTICATION_BACKENDS = [
+ 'users.auth_backends.UserEmailBackend',
+ 'django.contrib.auth.backends.ModelBackend',
+]
+
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/
 
@@ -181,3 +186,10 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.BasicAuthentication',
     )
 }
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.sendgrid.net'
+EMAIL_HOST_USER = 'hardls12'
+EMAIL_HOST_PASSWORD = '123qweasdzxc283439'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True

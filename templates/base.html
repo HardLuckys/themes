@@ -9,7 +9,7 @@
   </head>
   <body>
     <nav class="sticky-top navbar navbar-expand-lg navbar-dark bg-dark text-light border-bottom border-success" id="nav">
-      {% if user.is_authenticated %}
+      {% if user.is_authenticated or not user.is_active %}
         <a class="navbar-brand" href="{{ user.get_absolute_url }}">
           <img class="rounded rounded-circle" src="{{ user.avatar.url }}" id="avatar" width="30" height="30" alt="">
         </a>
@@ -59,7 +59,9 @@
             <li class="nav-item"><a class="nav-link text-light" href="{% url 'avataruser_delete' user.slug %}">Удалить аккаунт</a></li>
 
             <li class="nav-item"><a class="nav-link text-light" href="{% url 'logout' %}">выйти</a></li>
-
+            {% if user.is_coded == False %}
+              <li class="nav-item"><a class="nav-link text-success" href="{% url 'get_code' %}">Подтверждение аккаунта</a></li>
+            {% endif %}
           {% else %}
             <li class="nav-item"><a class="nav-link text-light" href="{% url 'login' %}">войти</a></li>
             <li class="nav-item"><a class="nav-link text-light" href="{% url 'signup' %}">зарегистрироваться</a></li>
@@ -73,6 +75,9 @@
         {% endif %}
       </div>
     </nav>
+    <div class="progress col-10 mx-auto p-0">
+      <div class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="1" aria-valuemin="0" aria-valuemax="100">%</div>
+    </div>
     <div class="content">
       {% if search_query %}
         {% for category in categories_query %}
